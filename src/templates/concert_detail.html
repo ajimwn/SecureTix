@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <div class="bg-[#1e1e1e] rounded-2xl border border-gray-800 shadow-2xl overflow-hidden flex flex-col">
+        
+        <div class="w-full">
+            {% if concert.poster %}
+            <img src="{{ concert.poster.url }}" alt="{{ concert.title }} poster" class="w-full h-64 md:h-96 object-cover">
+            {% else %}
+            <div class="w-full bg-gray-800 flex items-center justify-center h-64 md:h-96">
+                <span class="text-gray-500 font-bold">No Image Available</span>
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="p-10 w-full flex flex-col justify-center">
+            <h1 class="text-4xl font-black mb-4">{{ concert.title }}</h1>
+            
+            <div class="space-y-4 mb-8">
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-widest">Date & Time</h3>
+                    <p class="text-xl text-white">{{ concert.date|date:"F d, Y, h:i A" }}</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-widest">Description</h3>
+                    <p class="text-white">{{ concert.description|linebreaksbr }}</p>
+                </div>
+
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-widest">Price</h3>
+                    <p class="text-2xl font-bold text-green-400">${{ concert.price }}</p>
+                </div>
+            </div>
+
+            {% if user.is_authenticated %}
+            <form method="POST" action="{% url 'book_ticket' concert.id %}">
+                {% csrf_token %}
+                <button type="submit" class="w-full bg-[#026cdf] hover:bg-[#0050a8] text-white font-black py-4 px-6 rounded-xl transition text-lg shadow-lg shadow-blue-900/20">
+                    Confirm Purchase
+                </button>
+            </form>
+            {% else %}
+            <a href="{% url 'login' %}?next={{ request.path }}" class="block text-center w-full bg-[#026cdf] hover:bg-[#0050a8] text-white font-black py-4 px-6 rounded-xl transition text-lg shadow-lg shadow-blue-900/20">
+                Log in to Purchase
+            </a>
+            {% endif %}
+            
+            <div class="mt-4 text-center">
+                <a href="{% url 'home' %}" class="text-sm text-gray-400 hover:text-white underline">Cancel and return to home</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

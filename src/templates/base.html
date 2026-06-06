@@ -13,9 +13,10 @@
 <body class="bg-[#121212] text-white min-h-screen">
     <nav class="p-6 flex justify-between items-center border-b border-gray-800">
         <a href="{% url 'home' %}" class="text-2xl font-black italic tracking-tighter">SECURE<span class="text-[#026cdf]">TIX</span></a>
-        <div class="space-x-6 text-sm font-semibold">
+        <div class="space-x-6 text-sm font-semibold flex items-center">
+            <a href="{% url 'home' %}" class="hover:text-[#026cdf]">Home</a>
             {% if user.is_authenticated %}
-                <a href="{% url 'profile' %}" class="hover:text-[#026cdf]">My Tickets</a>
+                <a href="{% url 'profile' %}" class="hover:text-[#026cdf]">My Profile</a>
                 <form action="{% url 'logout' %}" method="post" class="inline">
                     {% csrf_token %}
                     <button type="submit" class="bg-gray-800 px-4 py-2 rounded-lg hover:bg-red-900 cursor-pointer">Sign Out</button>

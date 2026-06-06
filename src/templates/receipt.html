@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <div class="bg-[#1e1e1e] p-10 rounded-2xl border border-gray-800 shadow-2xl">
+        <div class="text-center mb-8 border-b border-gray-700 pb-6">
+            <h1 class="text-4xl font-black italic tracking-tighter text-white mb-2">SECURE<span class="text-[#026cdf]">TIX</span></h1>
+            <h2 class="text-2xl font-bold text-gray-300 uppercase tracking-widest">Official Receipt</h2>
+        </div>
+        
+        <div class="space-y-6">
+            <div class="flex justify-between items-center border-b border-gray-800 pb-4">
+                <span class="text-gray-400 font-semibold uppercase text-sm">Receipt ID</span>
+                <span class="text-white font-mono">{{ booking.id }}</span>
+            </div>
+            
+            <div class="flex justify-between items-center border-b border-gray-800 pb-4">
+                <span class="text-gray-400 font-semibold uppercase text-sm">Customer Name</span>
+                <span class="text-white font-bold">{{ booking.user.first_name }} {{ booking.user.last_name }}</span>
+            </div>
+
+            <div class="flex justify-between items-center border-b border-gray-800 pb-4">
+                <span class="text-gray-400 font-semibold uppercase text-sm">Event</span>
+                <span class="text-[#026cdf] font-black text-xl">{{ booking.concert.title }}</span>
+            </div>
+
+            <div class="flex justify-between items-center border-b border-gray-800 pb-4">
+                <span class="text-gray-400 font-semibold uppercase text-sm">Event Date</span>
+                <span class="text-white">{{ booking.concert.date|date:"F d, Y, h:i A" }}</span>
+            </div>
+            
+            <div class="flex justify-between items-center border-b border-gray-800 pb-4">
+                <span class="text-gray-400 font-semibold uppercase text-sm">Booking Date</span>
+                <span class="text-white">{{ booking.booking_date|date:"F d, Y, h:i A" }}</span>
+            </div>
+
+            <div class="flex justify-between items-center pt-4">
+                <span class="text-gray-400 font-black uppercase text-lg">Total Amount Paid</span>
+                <span class="text-green-400 font-black text-3xl">${{ booking.concert.price }}</span>
+            </div>
+        </div>
+
+        <div class="mt-10 text-center">
+            <a href="{% url 'profile' %}" class="inline-block bg-gray-800 text-white px-8 py-3 rounded-lg font-bold hover:bg-gray-700 transition shadow-lg">
+                Back to Profile
+            </a>
+            <button onclick="window.print()" class="inline-block ml-4 bg-[#026cdf] text-white px-8 py-3 rounded-lg font-bold hover:bg-[#0050a8] transition shadow-lg shadow-blue-900/20">
+                Print Receipt
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,6 +1,19 @@
 import uuid
+import os
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
+from django.core.exceptions import ValidationError
+
+def validate_poster_file(file):
+    max_size = 5 * 1024 * 1024 # 5 MB
+    if file.size > max_size:
+        raise ValidationError(f"File size must be under 5MB.")
+    
+    ext = os.path.splitext(file.name)[1].lower()
+    valid_extensions = ['.jpg', '.jpeg', '.png']
+    if ext not in valid_extensions:
+        raise ValidationError(f"Unsupported file extension. Allowed extensions are: {', '.join(valid_extensions)}")
 
 # 1. Concert Model (For Admin CRUD & User browsing)
 class Concert(models.Model):
@@ -10,8 +23,12 @@ class Concert(models.Model):
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     date = models.DateTimeField()
-    # We will secure this file upload later according to the rubric
-    poster = models.ImageField(upload_to='posters/', blank=True, null=True) 
+    # Secured file upload
+    poster = models.ImageField(upload_to='posters/', blank=True, null=True, validators=[validate_poster_file]) 
+
+    @property
+    def is_past(self):
+        return self.date < timezone.now()
 
     def __str__(self):
         return self.title
