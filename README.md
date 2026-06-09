@@ -46,12 +46,12 @@ Every layer of the application is built with security in mind - from the file up
     SecureTix/
     ├── docs/
     │   └── screenshots/            # Application screenshots
+    │       ├── admin.png
+    │       ├── concert_detail.png
     │       ├── homepage.png
     │       ├── login.png
-    │       ├── register.png
-    │       ├── concert_detail.png
     │       ├── profile.png
-    │       └── admin.png
+    │       └── register.png
     ├── src/
     │   ├── core/                   # Project settings & routing
     │   │   ├── settings.py         # Environment-based configuration
@@ -76,8 +76,8 @@ Every layer of the application is built with security in mind - from the file up
     │   │   └── receipt.html        # Booking receipt
     │   ├── posters/                # Uploaded concert poster images
     │   ├── manage.py               # Django management script
-    │   ├── db.sqlite3              # SQLite database (local dev)
-    │   └── .env.example            # Environment variable template
+    │   └── db.sqlite3              # SQLite database (local dev)
+    ├── .env.example                # Environment variable template
     ├── .gitignore                  # Git ignore rules
     ├── requirements.txt            # Python dependencies
     └── README.md                   # Project documentation
